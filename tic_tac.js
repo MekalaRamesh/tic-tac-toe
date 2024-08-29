@@ -13,6 +13,16 @@ let container = document.querySelector(".win-msg")
 let msg = document.querySelector("#msg")
 let newBttn =document.querySelector("#newGame")
 let turnO =true;
+let count = 0; 
+
+
+const resetGame = () =>{
+  turnO = true;
+  count =0;
+  enableButtons();
+  container.classList.add("hide");
+
+}
 
 
 boxes.forEach( (box) =>{
@@ -26,15 +36,27 @@ box.addEventListener("click", ()=>{
     else{
          turnO = true;
         box.innerText ="X"
-        box.disabled = true;
+       
     }
+     box.disabled = true;  
+     count++;
 
-    winner();
+     let isWinner =winner();
+
+    if (count === 9 && !isWinner) {
+      gameDraw();
+    }
     
     
 });
 });
 
+
+const gameDraw = () => {
+  msg.innerText = `Game was a Draw.`;
+  container.classList.remove("hide");
+  disableBoxes();
+};
 
 const disableButtons = () =>{
 for(let box of boxes){
@@ -49,12 +71,7 @@ const enableButtons = () =>{
   }
   }
 
-  const resetGame = () =>{
-    turnO = true;
-    enableButtons();
-    container.classList.add("hide");
-
-  }
+ 
 
 
 
@@ -65,6 +82,8 @@ container.classList.remove("hide");
 disableButtons();
 
 });
+
+
 
 
 
